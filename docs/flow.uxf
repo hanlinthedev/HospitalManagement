@@ -1,2 +1,5 @@
 <diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><help_text>Login</help_text><element><id>UMLState</id><coordinates><x>10</x><y>20</y><w>100</w><h>40</h></coordinates><panel_attributes>Start</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLObject</id><coordinates><x>10</x><y>90</y><w>100</w><h>40</h></coordinates><panel_attributes>ADMIN</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>50</x><y>50</y><w>30</w><h>60</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>UMLSpecialState</id><coordinates><x>10</x><y>160</y><w>100</w><h>40</h></coordinates><panel_attributes>lt=-
-login</panel_attributes><additional_attributes></additional_attributes></element></diagram>
+login</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>330</x><y>150</y><w>210</w><h>70</h></coordinates><panel_attributes>_object: Class_
+--
+id: Long="36548"
+[waiting for message]</panel_attributes><additional_attributes></additional_attributes></element></diagram>
