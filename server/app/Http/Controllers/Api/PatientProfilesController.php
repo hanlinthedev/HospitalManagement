@@ -5,13 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\PatientProfile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 
 class PatientProfilesController extends Controller
 {
-    // Unified error response method
     private function errorResponse($message, $errors = null, $statusCode = 422)
     {
         return response()->json([
