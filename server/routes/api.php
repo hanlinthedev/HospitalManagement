@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\PatientProfilesController;
 use App\Http\Controllers\Api\UserProfilesController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -12,3 +13,4 @@ Route::get('/user', function (Request $request) {
 Route::resource('/userprofiles',UserProfilesController::class);
 Route::post('/userprofiles/update/{id}',[UserProfilesController::class,'update']);
 
+Route::resource('/patientprofiles',PatientProfilesController::class);
