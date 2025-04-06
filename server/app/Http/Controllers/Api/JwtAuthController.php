@@ -21,8 +21,8 @@ class JwtAuthController extends Controller
         if($validator->fails()){
             return response()->json([
                 'message' => $validator->errors(),
-                'statusCode' => 401,
-            ], 401);
+                'statusCode' => 400,
+            ], 400);
         }
 
         $user = User::create([
@@ -45,7 +45,7 @@ class JwtAuthController extends Controller
             if(! $token = JWTAuth::attempt($cred)){
                 return response()->json([
                     'statusCode' => 401,
-                    'message' => "invalid cred",
+                    'message' => "invalid credentials",
                 ], 401);
             }
 

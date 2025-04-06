@@ -10,8 +10,8 @@ Route::get('/user', function (Request $request) {
 
 Route::group(['prefix' => "auth"], function(){
 
-    Route::post('singup', [JwtAuthController::class, 'register']);
-    Route::post('singin', [JwtAuthController::class, 'login']);
+    Route::post('signup', [JwtAuthController::class, 'register']);
+    Route::post('signin', [JwtAuthController::class, 'login']);
     Route::post('logout', [JwtAuthController::class, 'logout'])->middleware('jwtauthmiddleware');
     
 } );

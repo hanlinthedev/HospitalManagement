@@ -22,7 +22,7 @@ class JwtAuthMIddleware
         }catch(JWTException $e){
             return response()->json([
                 'statusCode' => 401,
-                'message' => 'invalid token',
+                'message' => 'invalid credentials',
             ], 401);
         }
         return $next($request);
