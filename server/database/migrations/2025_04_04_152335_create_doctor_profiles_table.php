@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('specialization_id')->constrained('specializations')->onDelete('cascade');
             $table->string('degree');
-            $table->integer('experience');
+            $table->string('experience');
             $table->string('profile_picture')->nullable();
             $table->timestamps();
         });
