@@ -15,16 +15,15 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => "auth"], function(){
     Route::post('signup', [JwtAuthController::class, 'register']);
     Route::post('signin', [JwtAuthController::class, 'login']);  
-    Route::post('logout', [JwtAuthController::class, 'logout']);  
-    Route::post('refresh', [JwtAuthController::class, 'refresh'] );
+
 } );
 
 
 Route::group(['middleware' => ['jwtauthmiddleware']], function () {
     // Common user route
     // Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware('role:user');
-    Route::post('logout', [JwtAuthController::class, 'logout']);
-    
+    Route::post('logout', [JwtAuthController::class, 'logout']);  
+    Route::post('refresh', [JwtAuthController::class, 'refresh'] );
     Route::resource('/userprofiles',UserProfilesController::class);
     Route::post('/userprofiles/update/{id}',[UserProfilesController::class,'update']);
 
