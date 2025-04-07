@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 Route::group(['prefix' => "auth"], function(){
     Route::post('signup', [JwtAuthController::class, 'register']);
     Route::post('signin', [JwtAuthController::class, 'login']);  
+    Route::post('refresh', [JwtAuthController::class, 'refresh'] );
 } );
 
 Route::group(['middleware' => ['jwtauthmiddleware']], function () {
