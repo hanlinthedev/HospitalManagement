@@ -14,8 +14,9 @@ class JwtAuthController extends Controller
     public function register(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'email' => "required|string|email|max:255|unique:users,email",
-            'password' => "required|max:10|string|min:4",
+
+            'email' => "required|email|max:255|string|unique:users,email",
+            'password' => "required|max:30|string|min:8",
         ]);
         
         if($validator->fails()){
@@ -62,6 +63,20 @@ class JwtAuthController extends Controller
             ], 500);
         }
     }
+
+    public function refresh(){
+        try{
+            $newToken = JWTAuth::parseToken()->refresh();
+            return response()->json([
+                'token' => $newToken,
+                'message' => "refresh token",
+            ], 200);
+        }catch(JWTException $e){
+            return response()->json(['error' => "refresh token falied"], 401);
+        }
+    }
+
+
 
     public function logout(){
                 
