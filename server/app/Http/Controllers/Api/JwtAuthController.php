@@ -14,8 +14,9 @@ class JwtAuthController extends Controller
     public function register(Request $request){
 
         $validator = Validator::make($request->all(), [
+
             'email' => "required|email|max:255|string|unique:users,email",
-            'password' => "required|max:30|string|min:4",
+            'password' => "required|max:30|string|min:8",
         ]);
         
         if($validator->fails()){
@@ -78,8 +79,7 @@ class JwtAuthController extends Controller
 
 
     public function logout(){
-
-        
+                
         // JWTAuth::invalidate(JWTAuth::getToken());
 
         auth()->guard('api')->logout();

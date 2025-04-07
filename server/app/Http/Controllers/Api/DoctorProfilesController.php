@@ -37,6 +37,7 @@ class DoctorProfilesController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'specialization_id' => 'required|exists:specializations,id',
             'degree' => 'required',
             'experience' => 'required',
             'profile_picture' => 'required|file',
@@ -47,11 +48,11 @@ class DoctorProfilesController extends Controller
         }
 
         try {
-            $user = Auth::user(); // You can use $user->id instead of hardcoded 1
-            // $user_id = $user->id;
+            $user = Auth::user(); 
+            $user_id = $user->id;
 
             $doctorprofile = new DoctorProfile();
-            $doctorprofile->user_id = 1;
+            $doctorprofile->user_id = $user_id;
             $doctorprofile->name = $request->name;
             $doctorprofile->specialization_id = $request->specialization_id;
             $doctorprofile->degree = $request->degree;
@@ -80,6 +81,7 @@ class DoctorProfilesController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
+            'specialization_id' => 'required|exists:specializations,id',
             'degree' => 'required',
             'experience' => 'required',
             'profile_picture' => 'required|file',

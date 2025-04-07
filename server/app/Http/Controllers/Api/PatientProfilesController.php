@@ -43,11 +43,11 @@ class PatientProfilesController extends Controller
         }
 
         try {
-            $user = Auth::user(); // You can use $user->id instead of hardcoded 1
-            // $user_id = $user->id;
+            $user = Auth::user(); 
+            $user_id = $user->id;
 
             $patientprofile = new PatientProfile();
-            $patientprofile->user_id = 1;
+            $patientprofile->user_id = $user_id;
             $patientprofile->name = $request->name;
             $patientprofile->phone = $request->phone;
             $patientprofile->age = $request->age;
@@ -79,11 +79,11 @@ class PatientProfilesController extends Controller
         }
 
         try {
-            $user = Auth::user(); // You can use $user->id instead of hardcoded 1
-            // $user_id = $user->id;
+            $user = Auth::user(); 
+            $user_id = $user->id;
 
             $patientprofile = PatientProfile::findOrFail($id);
-            $patientprofile->user_id = 1;
+            $patientprofile->user_id = $user_id;
             $patientprofile->name = $request->name;
             $patientprofile->phone = $request->phone;
             $patientprofile->age = $request->age;

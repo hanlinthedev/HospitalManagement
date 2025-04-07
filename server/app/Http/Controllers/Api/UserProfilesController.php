@@ -45,17 +45,18 @@ class UserProfilesController extends Controller
 
         try {
             $user = Auth::user(); // You can use $user->id instead of hardcoded 1
+            $user_id = $user->id;
 
             $userprofile = new UserProfile();
-            $userprofile->user_id = 1;
+            $userprofile->user_id = $user_id;
             $userprofile->username = $request->username;
             $userprofile->phone = $request->phone;
 
             if ($request->hasFile('profile_picture')) {
                 $file = $request->file('profile_picture');
                 $fname = $file->getClientOriginalName();
-                $file->move(public_path('assets/img/profile_picture/'), $fname);
-                $userprofile->profile_picture = 'assets/img/profile_picture/' . $fname;
+                $file->move(public_path('assets/img/user/'), $fname);
+                $userprofile->profile_picture = 'assets/img/user/' . $fname;
             }
 
             $userprofile->save();
@@ -83,13 +84,15 @@ class UserProfilesController extends Controller
         }
 
         try {
+            $user = Auth::user(); // You can use $user->id instead of hardcoded 1
+            $user_id = $user->id;
             $userprofile = UserProfile::find($id);
 
             if (!$userprofile) {
                 return $this->errorResponse('User profile not found', null, 404);
             }
 
-            $userprofile->user_id = 1;
+            $userprofile->user_id = $user_id;
             $userprofile->username = $request->username;
             $userprofile->phone = $request->phone;
 
@@ -100,8 +103,8 @@ class UserProfilesController extends Controller
 
                 $file = $request->file('profile_picture');
                 $fname = $file->getClientOriginalName();
-                $file->move(public_path('assets/img/profile_picture/'), $fname);
-                $userprofile->profile_picture = 'assets/img/profile_picture/' . $fname;
+                $file->move(public_path('assets/img/user/'), $fname);
+                $userprofile->profile_picture = 'assets/img/user/' . $fname;
             }
 
             $userprofile->save();
@@ -119,7 +122,7 @@ class UserProfilesController extends Controller
     public function destroy(string $id)
     {
         try {
-            $userprofile = UserProfile::find($id);
+            $userprofile = UserProfile::findOrFail($id);
 
             if (!$userprofile) {
                 return $this->errorResponse('User profile not found', null, 404);
