@@ -10,6 +10,7 @@ GET /api/doctors -> get all doctors
 GET /api/doctors/id -> get a doctor by id
 GET /api/doctors/search -> search for doctors by name
 
+//zin myo latt
 
 //Routes for authenticated users
 GET /api/profile -> get user profile
@@ -20,6 +21,8 @@ POST /api/profile/id/patient -> create patient profile for a user profile
 PATCH /api/profile/id/patient -> update patient profile
 DELETE /api/profile/id/patient -> delete patient profile
 GET /api/profile/id/patient/id/bookings -> get all booking of a patient from a user profile
+
+//aung kyaw zaw
 
 GET /api/bookings -> get all bookings by user id
 POST /api/bookings -> create booking
@@ -33,6 +36,9 @@ GET /api/admin/doctors/id -> get a doctor by id
 GET /api/admin/doctors/search -> search for doctors by name
 POST /api/admin/doctors -> create a doctor
 PATCH /api/admin/doctors -> update a doctor
+
+//thizar linn
+
 DELETE /api/admin/doctors -> delete a doctor
 GET /api/admin/departments -> get all departments
 GET /api/admin/departments/id -> get a department by id
