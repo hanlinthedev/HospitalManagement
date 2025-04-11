@@ -1,0 +1,79 @@
+
+//Routes for unauthenticated users
+
+GET /api/home -> 3 doctors, 3 departments
+GET /api/departments -> get all departments
+GET /api/departments/id -> get a department by id
+GET /api/departments/search -> search for departments by name
+GET /api/departments/id/doctors -> get all doctors from a department
+GET /api/doctors -> get all doctors
+GET /api/doctors/id -> get a doctor by id
+GET /api/doctors/search -> search for doctors by name
+
+
+//Routes for authenticated users
+GET /api/profile -> get user profile
+POST /api/profile -> create user profile
+PATCH/api/profile -> update user profile
+GET /api/profile/id/patient -> get all patient from a user profile
+POST /api/profile/id/patient -> create patient profile for a user profile
+PATCH /api/profile/id/patient -> update patient profile
+DELETE /api/profile/id/patient -> delete patient profile
+GET /api/profile/id/patient/id/bookings -> get all booking of a patient from a user profile
+
+GET /api/bookings -> get all bookings by user id
+POST /api/bookings -> create booking
+PATCH /api/bookings -> update a booking
+PATCH /api/bookings/cancel -> cancel a booking
+GET /api/bookings/id -> get a booking with remark by id 
+
+//Routes for admin
+GET /api/admin/doctors -> get all doctors
+GET /api/admin/doctors/id -> get a doctor by id
+GET /api/admin/doctors/search -> search for doctors by name
+POST /api/admin/doctors -> create a doctor
+PATCH /api/admin/doctors -> update a doctor
+DELETE /api/admin/doctors -> delete a doctor
+GET /api/admin/departments -> get all departments
+GET /api/admin/departments/id -> get a department by id
+GET /api/admin/departments/search -> search for departments by name
+POST /api/admin/departments -> create a department
+PATCH /api/admin/departments -> update a department
+DELETE /api/admin/departments -> delete a department
+
+GET /api/admin/rooms -> get all rooms
+GET /api/admin/rooms/id -> get a room by id
+POST /api/admin/rooms -> create a room
+PATCH /api/admin/rooms -> update a room
+DELETE /api/admin/rooms -> delete a room
+GET /api/admin/rooms/id/schedules -> get all schedules of a room
+
+GET /api/admin/schedules -> get all schedules
+
+PATCH /api/admin/schedules -> update schedules of a room
+DELETE /api/admin/schedules -> delete a schedule
+
+GET /api/admin/bookings -> get all bookings
+GET /api/admin/bookings/id -> get a booking by id
+
+GET /api/admin/reports -> get all reports
+
+//Routes for doctor
+GET /api/doctor/profile -> get doctor profile
+POST /api/doctor/profile -> create doctor profile
+PATCH /api/doctor/profile -> update doctor profile
+GET /api/doctor/profile/id/patients -> get all patients from a doctor profile
+GET /api/doctor/profile/id/patients/id/bookings -> get all bookings of a patient from a doctor profile
+GET /api/doctor/profile/id/patients/id/bookings/id/schedule -> get a schedule of a booking of a patient from a doctor profile
+GET /api/doctor/profile/bookings -> get all bookings of a doctor profile and can be filter by status
+
+GET /api/doctor/id/schedule -> get all of his  schedule
+GET /api/doctor/id/schedule/id -> get a schedule by id with all bookings
+POST /api/doctor/schedule -> create a schedule without room_id
+PATCH /api/doctor/schedule -> update a schedule
+DELETE /api/doctor/schedule -> delete a schedule
+
+GET /api/bookings/id/remark/id -> get a booking with remark by id 
+POST /api/bookings/id/remark -> create a remark for a booking
+PATCH /api/bookings/id/remark/id -> update a remark for a booking
+
