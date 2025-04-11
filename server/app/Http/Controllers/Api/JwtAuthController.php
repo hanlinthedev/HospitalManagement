@@ -29,6 +29,7 @@ class JwtAuthController extends Controller
             'email' => $request->email,
             'password' => bcrypt($request->password),
         ]);
+        $user->assignRole('user');
         $token = JWTAuth::fromUser($user);
         return response()->json([
             'statusCode' => 201,
