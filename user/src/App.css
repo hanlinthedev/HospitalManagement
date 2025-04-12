@@ -1,0 +1,14 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background-color: #242424;
+}
+
+#root {
+	max-width: 1280px;
+	margin: 0 auto;
+	background-color: rgb(161, 145, 64);
+	padding-inline: 2rem;
+}
