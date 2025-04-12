@@ -59,12 +59,13 @@ GET /api/admin/schedules -> get all schedules
 PATCH /api/admin/schedules -> update schedules of a room
 DELETE /api/admin/schedules -> delete a schedule
 
-//zin myo latt
 
 GET /api/admin/bookings -> get all bookings
 GET /api/admin/bookings/id -> get a booking by id
 
 GET /api/admin/reports -> get all reports
+
+//zin myo latt
 
 //Routes for doctor
 GET /api/doctor/profile -> get doctor profile
@@ -75,7 +76,6 @@ GET /api/doctor/profile/id/patients/id/bookings -> get all bookings of a patient
 GET /api/doctor/profile/id/patients/id/bookings/id/schedule -> get a schedule of a booking of a patient from a doctor profile
 GET /api/doctor/profile/bookings -> get all bookings of a doctor profile and can be filter by status
 
-// thin zar lin
 
 GET /api/doctor/id/schedule -> get all of his  schedule
 GET /api/doctor/id/schedule/id -> get a schedule by id with all bookings
@@ -86,4 +86,6 @@ DELETE /api/doctor/schedule -> delete a schedule
 GET /api/bookings/id/remark/id -> get a booking with remark by id 
 POST /api/bookings/id/remark -> create a remark for a booking
 PATCH /api/bookings/id/remark/id -> update a remark for a booking
+
+// thin zar lin
 
