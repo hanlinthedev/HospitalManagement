@@ -11,6 +11,8 @@ use App\Http\Controllers\Api\SpecializationsController;
 use App\Http\Controllers\Api\UserProfilesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\JwtAuthController;
+use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Api\HomeController;
 use Illuminate\Http\Request;
 
@@ -20,9 +22,13 @@ Route::group(['prefix' => "auth"], function () {
 
 });
 
-
-Route::get('test',[UserProfilesController::class,'test']);
+Route::get('departments', [SpecializationsController::class, 'index']);
+Route::get('departments/{department}', [SpecializationsController::class, 'show']);
+Route::get('departments/{department}/doctors', [HomeController::class, 'doctorsOfDepartment']);
+Route::get('doctors', [DoctorController::class, 'index']);
+Route::get('doctors/{doctor}', [DoctorController::class, 'show']);
 Route::get('home',[HomeController::class,'index']);
+
 
 Route::group(['middleware' => ['jwtauthmiddleware']], function () {
     // Common user route

@@ -21,11 +21,38 @@ class SpecializationsController extends Controller
 
     public function index()
     {
-        $specialization = Specialization::all();
+        $specializations = Specialization::
+                        when( request('search'), function($query){
+                            $query->where('name', 'like', '%'.request('search').'%');
+                        })
+                        ->get();
+
+        if(count($specializations) === 0){
+            return response()->json([
+            ], 204);
+        }
 
         return response()->json([
             'status' => 200,
-            'data' => $specialization
+            'data' => $specializations,
+        ], 200);
+    }
+
+    public function show($id){
+
+        $department = Specialization::where("id", $id)
+                    ->first();
+
+        if(! $department){
+            return response()->json([
+                'message' => 'no department found',
+            ], 204);    
+        }
+
+        return response()->json([
+            'specilation' => $department,
+            'message' => "specialization retrived successfully",
+            'statusCode' => 200,
         ], 200);
     }
 

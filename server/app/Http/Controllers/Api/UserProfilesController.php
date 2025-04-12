@@ -4,11 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserProfile;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use App\Models\User;
+
 
 class UserProfilesController extends Controller
 {
@@ -55,7 +58,7 @@ class UserProfilesController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required',
             'phone' => 'required',
-            'profile_picture' => 'required|file'
+            // 'profile_picture' => 'required|file'
         ]);
 
         if ($validator->fails()) {
