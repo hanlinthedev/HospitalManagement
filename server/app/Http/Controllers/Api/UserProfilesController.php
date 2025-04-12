@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use App\Models\User;
+
 
 class UserProfilesController extends Controller
 {
@@ -23,6 +25,10 @@ class UserProfilesController extends Controller
         ], $statusCode);
     }
 
+    public function test() {
+        $data = User::role('admin')->with('roles')->get();
+        return response()->json($data, 200);
+    }
     public function index()
     {
         $userprofiles = UserProfile::all();
@@ -31,6 +37,20 @@ class UserProfilesController extends Controller
             'status' => 200,
             'data' => $userprofiles
         ], 200);
+    }
+
+    public function getid($id)
+    {
+        try{
+            $userprofile = UserProfile::findOrFail($id);
+
+            return response()->json([
+                'status' => 200,
+                'data' => $userprofile
+            ], 200);
+        }catch(\Exception $e){
+            return $this->errorResponse('An error occurred while getting profile', ['exception' => [$e->getMessage()]], 500);
+        }
     }
 
     public function store(Request $request)

@@ -29,6 +29,7 @@ class SpecializationsSeeder extends Seeder
         foreach ($specializations as $specialization) {
             Specialization::create([
                 'name' => $specialization,
+                'icon' => 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png',
             ]);
         }
     }
