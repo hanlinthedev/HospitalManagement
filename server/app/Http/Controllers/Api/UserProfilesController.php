@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class UserProfilesController extends Controller
 {
@@ -21,6 +22,10 @@ class UserProfilesController extends Controller
         ], $statusCode);
     }
 
+    public function test() {
+        $data = User::role('admin')->with('roles')->get();
+        return response()->json($data, 200);
+    }
     public function index()
     {
         $userprofiles = UserProfile::all();

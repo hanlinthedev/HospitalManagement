@@ -4,11 +4,36 @@
 
 body {
 	background-color: #242424;
+	font-family: "Poppins", sans-serif;
+	min-height: 100vh;
+	background-image: linear-gradient(to bottom, #f7ebe5, #fff);
 }
 
 #root {
-	max-width: 1280px;
 	margin: 0 auto;
-	background-color: rgb(161, 145, 64);
-	padding-inline: 2rem;
+}
+
+#nprogress .bar {
+	background: #d5957a !important; /* Tailwind's blue-500 */
+	height: 3px !important;
+}
+
+/* Hide the default top-right spinner */
+#nprogress .spinner {
+	top: 50%;
+	left: 50%;
+	right: auto;
+	bottom: auto;
+	transform: translate(-50%, 50%);
+	position: fixed;
+	z-index: 1031;
+}
+
+/* Change spinner color */
+#nprogress .spinner-icon {
+	border-top-color: #d5957a !important; /* blue-500 */
+	border-left-color: #d5957a !important;
+	border-width: 5px;
+	width: 50px;
+	height: 50px;
 }

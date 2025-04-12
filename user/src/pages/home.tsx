@@ -1,5 +1,13 @@
+import { Hero, HowItWork } from "@/components/home";
+
 const Home = () => {
-	return <div>Home</div>;
+	return (
+		<>
+			<Hero />
+			<HowItWork />
+			<div className="h-[200vh] w-full">s</div>
+		</>
+	);
 };
 
 export default Home;
