@@ -41,6 +41,7 @@ Route::group(['middleware' => ['jwtauthmiddleware']], function () {
         // Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
         // Route::apiResource('/admin/users', AdminUserController::class);
         Route::resource('/admin/specializations',SpecializationsController::class);
+        Route::resource('/admin/doctorprofiles',DoctorProfilesController::class);
       
     }); 
 
@@ -49,7 +50,6 @@ Route::group(['middleware' => ['jwtauthmiddleware']], function () {
     Route::resource('/doctorprofiles',DoctorProfilesController::class);
     Route::resource('/appointments',AppointmentsController::class);
     Route::resource('/doctorremarks',DoctorRemarksController::class);
-
 
     // Doctor-only routes
     Route::group(['middleware' => ['role:doctor']], function () {
