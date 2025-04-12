@@ -19,15 +19,30 @@ class PatientProfilesController extends Controller
         ], $statusCode);
     }
 
-    public function index()
+    public function index($id)
     {
-        $patientprofile = PatientProfile::all();
+        $patientprofile = PatientProfile::findOrFail($id);
 
         return response()->json([
             'status' => 200,
             'data' => $patientprofile
         ], 200);
     }
+
+    public function getid($id)
+    {
+        try{
+            $patientprofile = PatientProfile::findOrFail($id);
+
+            return response()->json([
+                'status' => 200,
+                'data' => $patientprofile
+            ], 200);
+        }catch(\Exception $e){
+            return $this->errorResponse('An error occurred while getting profile', ['exception' => [$e->getMessage()]], 500);
+        }
+    }
+
 
     public function store(Request $request)
     {
