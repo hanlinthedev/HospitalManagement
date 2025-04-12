@@ -57,4 +57,14 @@ class User extends Authenticatable implements JWTSubject
             'password' => 'hashed',
         ];
     }
+
+    public function profile()
+    {
+        return $this->hasOne(UserProfile::class);
+    }
+
+    public function patientProfiles()
+    {
+        return $this->hasMany(PatientProfile::class);
+    }
 }
