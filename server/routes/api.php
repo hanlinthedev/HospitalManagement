@@ -10,19 +10,22 @@ use App\Http\Controllers\Api\SpecializationsController;
 use App\Http\Controllers\Api\UserProfilesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\JwtAuthController;
+use App\Http\Controllers\Api\HomeController;
 use Illuminate\Http\Request;
 
 Route::group(['prefix' => "auth"], function(){
     Route::post('signup', [JwtAuthController::class, 'register']);
-    Route::post('signin', [JwtAuthController::class, 'login']);  
+    Route::post('signin', [JwtAuthController::class, 'login']);
 
 } );
 
+Route::get('test',[UserProfilesController::class,'test']);
+Route::get('home',[HomeController::class,'index']);
 
 Route::group(['middleware' => ['jwtauthmiddleware']], function () {
     // Common user route
     // Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware('role:user');
-    Route::post('logout', [JwtAuthController::class, 'logout']);  
+    Route::post('logout', [JwtAuthController::class, 'logout']);
     Route::post('refresh', [JwtAuthController::class, 'refresh'] );
     Route::resource('/userprofiles',UserProfilesController::class);
     Route::post('/userprofiles/update/{id}',[UserProfilesController::class,'update']);
@@ -34,8 +37,8 @@ Route::group(['middleware' => ['jwtauthmiddleware']], function () {
         // Route::get('/admin/dashboard', [AdminController::class, 'dashboard']);
         // Route::apiResource('/admin/users', AdminUserController::class);
         Route::resource('/admin/specializations',SpecializationsController::class);
-      
-    }); 
+
+    });
 
     Route::resource('/rooms',RoomsController::class);
     Route::resource('/schedules',SchedulesController::class);
