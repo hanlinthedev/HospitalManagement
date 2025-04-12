@@ -15,14 +15,16 @@ GET /api/doctors/search -> search for doctors by name
 //Routes for authenticated users
 GET /api/profile -> get user profile
 POST /api/profile -> create user profile
-PATCH/api/profile -> update user profile
-GET /api/profile/id/patient -> get all patient from a user profile
-POST /api/profile/id/patient -> create patient profile for a user profile
-PATCH /api/profile/id/patient -> update patient profile
-DELETE /api/profile/id/patient -> delete patient profile
+PATCH /api/profile -> update user profile
+
+GET /api/profile/patient/id -> get all patient from a user profile
+POST /api/profile/patient/create -> create patient profile for a user profile
+PATCH /api/profile/patient/update/id -> update patient profile
+DELETE /api/profile/patient/delete -> delete patient profile
+
 GET /api/profile/id/patient/id/bookings -> get all booking of a patient from a user profile
 
-//aung kyaw zaw
+//aung kyaw zaww
 
 GET /api/bookings -> get all bookings by user id
 POST /api/bookings -> create booking
