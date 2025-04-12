@@ -27,10 +27,17 @@ Route::group(['middleware' => ['jwtauthmiddleware']], function () {
     // Route::get('/dashboard', [UserController::class, 'dashboard'])->middleware('role:user');
     Route::post('logout', [JwtAuthController::class, 'logout']);
     Route::post('refresh', [JwtAuthController::class, 'refresh'] );
-    Route::resource('/userprofiles',UserProfilesController::class);
-    Route::post('/userprofiles/update/{id}',[UserProfilesController::class,'update']);
 
-    Route::resource('/patientprofiles',PatientProfilesController::class);
+    // user_profile
+    Route::get('/profile', [UserProfilesController::class, 'index']);
+    Route::post('/profile',[UserProfilesController::class,'store']);
+    Route::post('/profile/update/{id}',[UserProfilesController::class,'update']);
+
+    // patient_profile
+    Route::get('/profile/patient/{id}/',[PatientProfilesController::class,'getid']);
+    Route::post('/profile/patient/create',[PatientProfilesController::class,'store']);
+    Route::put('/profile/patient/update/{id}',[PatientProfilesController::class,'update']);
+    Route::delete('/profile/patient/delete/{id}',[PatientProfilesController::class,'destroy']);
 
     // Admin-only routes
     Route::group(['middleware' => ['role:admin']], function () {

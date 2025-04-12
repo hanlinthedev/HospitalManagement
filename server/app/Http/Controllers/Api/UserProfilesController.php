@@ -36,6 +36,20 @@ class UserProfilesController extends Controller
         ], 200);
     }
 
+    public function getid($id)
+    {
+        try{
+            $userprofile = UserProfile::findOrFail($id);
+
+            return response()->json([
+                'status' => 200,
+                'data' => $userprofile
+            ], 200);
+        }catch(\Exception $e){
+            return $this->errorResponse('An error occurred while getting profile', ['exception' => [$e->getMessage()]], 500);
+        }
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
