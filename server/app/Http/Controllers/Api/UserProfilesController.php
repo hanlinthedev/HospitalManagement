@@ -4,10 +4,14 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\UserProfile;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
+use App\Models\User;
+
 
 class UserProfilesController extends Controller
 {
@@ -21,6 +25,10 @@ class UserProfilesController extends Controller
         ], $statusCode);
     }
 
+    public function test() {
+        $data = User::role('admin')->with('roles')->get();
+        return response()->json($data, 200);
+    }
     public function index()
     {
         $userprofiles = UserProfile::all();
@@ -50,7 +58,7 @@ class UserProfilesController extends Controller
         $validator = Validator::make($request->all(), [
             'username' => 'required',
             'phone' => 'required',
-            'profile_picture' => 'required|file'
+            // 'profile_picture' => 'required|file'
         ]);
 
         if ($validator->fails()) {
@@ -100,8 +108,9 @@ class UserProfilesController extends Controller
         try {
             $user = Auth::user(); // You can use $user->id instead of hardcoded 1
             $user_id = $user->id;
-            $userprofile = UserProfile::find($id);
 
+            $userprofile = new UserProfile();
+            
             if (!$userprofile) {
                 return $this->errorResponse('User profile not found', null, 404);
             }

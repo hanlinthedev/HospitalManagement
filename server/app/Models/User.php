@@ -13,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 class User extends Authenticatable implements JWTSubject
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory, Notifiable, HasRoles, HasApiTokens;
 
     public function getJWTIdentifier()
     {
@@ -58,8 +58,14 @@ class User extends Authenticatable implements JWTSubject
         ];
     }
 
-    public function profile()
+    public function userprofile()
     {
         return $this->hasOne(UserProfile::class);
     }
+
+    public function patientProfiles()
+    {
+        return $this->hasMany(PatientProfile::class);
+    }
+
 }

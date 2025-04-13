@@ -10,8 +10,6 @@ GET /api/doctors -> get all doctors
 GET /api/doctors/id -> get a doctor by id
 GET /api/doctors/search -> search for doctors by name
 
-//zin myo latt
-
 //Routes for authenticated users
 GET /api/profile -> get user profile
 POST /api/profile -> create user profile
@@ -23,8 +21,6 @@ PATCH /api/profile/patient/update/id -> update patient profile
 DELETE /api/profile/patient/delete -> delete patient profile
 
 GET /api/profile/id/patient/id/bookings -> get all booking of a patient from a user profile
-
-//aung kyaw zaww
 
 GET /api/bookings -> get all bookings by user id
 POST /api/bookings -> create booking
@@ -39,7 +35,7 @@ GET /api/admin/doctors/search -> search for doctors by name
 POST /api/admin/doctors -> create a doctor
 PATCH /api/admin/doctors -> update a doctor
 
-//thizar linn
+//Doneeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 
 DELETE /api/admin/doctors -> delete a doctor
 GET /api/admin/departments -> get all departments
@@ -48,6 +44,8 @@ GET /api/admin/departments/search -> search for departments by name
 POST /api/admin/departments -> create a department
 PATCH /api/admin/departments -> update a department
 DELETE /api/admin/departments -> delete a department
+
+// aung kyaw zaww
 
 GET /api/admin/rooms -> get all rooms
 GET /api/admin/rooms/id -> get a room by id
@@ -61,10 +59,13 @@ GET /api/admin/schedules -> get all schedules
 PATCH /api/admin/schedules -> update schedules of a room
 DELETE /api/admin/schedules -> delete a schedule
 
+
 GET /api/admin/bookings -> get all bookings
 GET /api/admin/bookings/id -> get a booking by id
 
 GET /api/admin/reports -> get all reports
+
+//zin myo latt
 
 //Routes for doctor
 GET /api/doctor/profile -> get doctor profile
@@ -75,6 +76,7 @@ GET /api/doctor/profile/id/patients/id/bookings -> get all bookings of a patient
 GET /api/doctor/profile/id/patients/id/bookings/id/schedule -> get a schedule of a booking of a patient from a doctor profile
 GET /api/doctor/profile/bookings -> get all bookings of a doctor profile and can be filter by status
 
+
 GET /api/doctor/id/schedule -> get all of his  schedule
 GET /api/doctor/id/schedule/id -> get a schedule by id with all bookings
 POST /api/doctor/schedule -> create a schedule without room_id
@@ -84,4 +86,6 @@ DELETE /api/doctor/schedule -> delete a schedule
 GET /api/bookings/id/remark/id -> get a booking with remark by id 
 POST /api/bookings/id/remark -> create a remark for a booking
 PATCH /api/bookings/id/remark/id -> update a remark for a booking
+
+// thin zar lin
 
