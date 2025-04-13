@@ -11,9 +11,7 @@ use App\Http\Controllers\Api\SpecializationsController;
 use App\Http\Controllers\Api\UserProfilesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\JwtAuthController;
-use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Api\HomeController;
 use Illuminate\Http\Request;
 
 Route::group(['prefix' => "auth"], function () {
@@ -73,8 +71,30 @@ Route::group(['middleware' => ['jwtauthmiddleware']], function () {
         Route::get('/doctors/{doctor}', [DoctorController::class, 'show'])->name('admin.doctors.show');
     });
 
-    Route::resource('/rooms', RoomsController::class);
-    Route::resource('/schedules', SchedulesController::class);
+    
+    // second day of api route management ( otis )
+    Route::get('admin/rooms', [RoomsController::class, 'index']);
+    Route::get('admin/rooms/{room}', [RoomsController::class, 'show']);
+    Route::post('admin/rooms', [RoomsController::class, 'store']);
+    Route::put('admin/rooms/{room}', [RoomsController::class, 'update']);
+    Route::delete('admin/rooms/{room}', [RoomsController::class, 'destroy']);
+    Route::get('admin/rooms/{room}/schedules', [RoomsController::class, 'scheudlesOfRoom']);
+
+    Route::get('admin/schedules', [SchedulesController::class, 'index']);
+    Route::get('admin/schedules/{schedule}', [SchedulesController::class, 'show']);
+    Route::post('admin/schedules', [SchedulesController::class, 'store']);
+    Route::put('admin/schedules/{schedule}', [SchedulesController::class, 'update']);
+    Route::delete('admin/schedules/{schedule}', [SchedulesController::class, 'destroy']);
+
+	Route::get('admin/bookings', [AppointmentsController::class, 'index']);
+	Route::get('admin/bookings/{booking}', [AppointmentsController::class, 'show']);
+
+	Route::get('admin/reports', [DoctorRemarksController::class, 'index'] );
+
+	
+    
+
+    // Route::resource('/schedules', SchedulesController::class);
     Route::resource('/doctorprofiles', DoctorProfilesController::class);
     Route::resource('/doctorremarks', DoctorRemarksController::class);
 

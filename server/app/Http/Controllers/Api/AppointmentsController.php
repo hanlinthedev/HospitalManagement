@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AppointmentResource;
 use App\Models\Appointment;
 use App\Models\User;
+use Database\Factories\AppointmentFactory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -23,7 +25,7 @@ class AppointmentsController extends Controller
 
     public function index()
     {
-        $appointment = Appointment::all();
+        $appointment = AppointmentResource::collection(Appointment::get());
         return response()->json(['status' => 200, 'data' => $appointment], 200);
     }
 
@@ -124,10 +126,10 @@ class AppointmentsController extends Controller
         return response()->json(['status' => 200, 'data' => $appointments], 200);
     }
 
-    public function show(Appointment $appointment)
+    public function show(Appointment $booking)
     {
-        $appointment->load('remark');
-        return response()->json(['status' => 200, 'data' => $appointment], 200);
+        // $booking->load('remark');
+        return response()->json(['status' => 200, 'data' => new AppointmentResource($booking) ], 200);
     }
 
     public function cancel(Appointment $appointment)

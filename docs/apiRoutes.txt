@@ -50,13 +50,14 @@ DELETE /api/admin/departments -> delete a department
 GET /api/admin/rooms -> get all rooms
 GET /api/admin/rooms/id -> get a room by id
 POST /api/admin/rooms -> create a room
-PATCH /api/admin/rooms -> update a room
-DELETE /api/admin/rooms -> delete a room
+PATCH /api/admin/rooms/{room} -> update a room
+DELETE /api/admin/rooms/{room} -> delete a room
 GET /api/admin/rooms/id/schedules -> get all schedules of a room
 
 GET /api/admin/schedules -> get all schedules
-
-PATCH /api/admin/schedules -> update schedules of a room
+GET /api/admin/schedules/{schedule} -> get a schedule by id 
+POST /api/admin/schedules -> create a schedule
+PATCH /api/admin/schedules/{schedule} -> update schedules of a room
 DELETE /api/admin/schedules -> delete a schedule
 
 
