@@ -11,8 +11,6 @@ use App\Http\Controllers\Api\SpecializationsController;
 use App\Http\Controllers\Api\UserProfilesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\JwtAuthController;
-use App\Http\Controllers\DoctorController;
-use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Api\HomeController;
 use Illuminate\Http\Request;
 

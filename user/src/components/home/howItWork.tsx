@@ -1,3 +1,4 @@
+import arrow from "@/assets/Arrow 1.svg";
 import confirm from "@/assets/confirm.svg";
 import date from "@/assets/date.svg";
 import doctor from "@/assets/doctor.svg";
@@ -13,9 +14,15 @@ const HowItWork = () => {
 					</div>
 				</div>
 				<div>
+					<img src={arrow} alt="" />
+				</div>
+				<div>
 					<div className="bg-primary w-52 h-52 rounded-full flex justify-center items-center">
 						<img src={date} alt="" />
 					</div>
+				</div>
+				<div>
+					<img src={arrow} alt="" />
 				</div>
 				<div>
 					<div className="bg-primary w-52 h-52 rounded-full flex justify-center items-center">
