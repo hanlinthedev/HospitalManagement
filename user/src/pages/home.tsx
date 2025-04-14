@@ -1,11 +1,20 @@
-import { Hero, HowItWork } from "@/components/home";
+import {
+	Departments,
+	FeaturedDoctors,
+	Hero,
+	HowItWork,
+} from "@/components/home";
+import { useHome } from "@/hooks/useHome";
 
 const Home = () => {
+	const { departments, doctors, isLoading } = useHome();
+	console.log(isLoading, doctors, departments);
 	return (
 		<>
 			<Hero />
 			<HowItWork />
-			<div className="h-[200vh] w-full">s</div>
+			<Departments departments={departments} />
+			<FeaturedDoctors doctors={doctors} />
 		</>
 	);
 };
