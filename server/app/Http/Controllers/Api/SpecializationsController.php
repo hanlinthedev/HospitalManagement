@@ -40,8 +40,9 @@ class SpecializationsController extends Controller
 
     public function show($id){
 
-        $department = Specialization::where("id", $id)
-                    ->with('doctors')->first();
+
+        $department = Specialization::where("id", $id)->first();
+
 
         if(! $department){
             return response()->json([

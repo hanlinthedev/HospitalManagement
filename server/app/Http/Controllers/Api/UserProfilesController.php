@@ -109,6 +109,8 @@ class UserProfilesController extends Controller
             $user = Auth::user(); // You can use $user->id instead of hardcoded 1
             $user_id = $user->id;
 
+            $userprofile = new UserProfile();
+            
             if (!$userprofile) {
                 return $this->errorResponse('User profile not found', null, 404);
             }

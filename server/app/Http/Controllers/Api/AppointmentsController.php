@@ -27,6 +27,18 @@ class AppointmentsController extends Controller
         return response()->json(['status' => 200, 'data' => $appointment], 200);
     }
 
+    public function getBookings(string $id)
+    {
+        try{
+
+            $getbookingid = Appointment::where("patient_id", $id)->get();
+            return response()->json(['status' => 200, 'data' => $getbookingid], 200);
+
+        }catch(\Exception $e){
+            return $this->errorResponse('An error occurred while getting booking', ['exception' => [$e->getMessage()]], 500);
+        }
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -49,13 +61,13 @@ class AppointmentsController extends Controller
             $appointment->booking_no = $request->booking_no;
             $appointment->booking_date = $request->booking_date;
             $appointment->status = 'Pending';
-
             $appointment->save();
 
             return response()->json([
                 'status' => 200,
                 'message' => 'Appointment created successfully'
             ], 200);
+            
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while creating appointment', ['exception' => [$e->getMessage()]], 500);
         }

@@ -24,12 +24,12 @@ class DoctorProfilesController extends Controller
     public function index()
     {
         $doctorprofile = DoctorProfile::all();
-        $specialization = Specialization::get()->pluck('name','id');
+        // $specialization = Specialization::get()->pluck('name','id');
 
         return response()->json([
             'status' => 200,
             'data' => $doctorprofile,
-            'specialization' => $specialization
+            // 'specialization' => $specialization
         ], 200);
     }
 
