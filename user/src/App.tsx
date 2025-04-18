@@ -1,16 +1,57 @@
-import { Route, Routes } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import "./App.css";
 import AppLayout from "./components/common/AppLayout";
-import { About, Departments, Doctors, Home, Login } from "./pages";
 
+import { lazy, Suspense } from "react";
+import Loading from "./components/common/Loading";
+import { EachDepartment } from "./pages";
+
+const About = lazy(() => import("./pages/about"));
+const Departments = lazy(() => import("./pages/departments"));
+const Doctors = lazy(() => import("./pages/doctors"));
+const Home = lazy(() => import("./pages/home"));
+const Login = lazy(() => import("./pages/login"));
 function App() {
+	const location = useLocation();
 	return (
 		<Routes>
 			<Route path="/" element={<AppLayout />}>
-				<Route index element={<Home />} />
-				<Route path="department" element={<Departments />} />
-				<Route path="doctor" element={<Doctors />} />
-				<Route path="about" element={<About />} />
+				<Route
+					index
+					element={
+						<Suspense key={location.pathname} fallback={<Loading />}>
+							<Home />{" "}
+						</Suspense>
+					}
+				/>
+				<Route path="department">
+					<Route
+						index
+						element={
+							<Suspense key={location.pathname} fallback={<Loading />}>
+								<Departments />
+							</Suspense>
+						}
+					/>
+					<Route path=":id" element={<EachDepartment />} />
+				</Route>
+				<Route
+					path="doctor"
+					element={
+						<Suspense key={location.pathname} fallback={<Loading />}>
+							<Doctors />
+						</Suspense>
+					}
+				/>
+				<Route
+					path="about"
+					element={
+						<Suspense key={location.pathname} fallback={<Loading />}>
+							{" "}
+							<About />{" "}
+						</Suspense>
+					}
+				/>
 				<Route path="*" element={<div>404</div>} />
 				<Route path="login" element={<Login />} />
 			</Route>

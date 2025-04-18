@@ -55,8 +55,9 @@ class DoctorController extends Controller
         ], 200);
     }
 
-    public function update(Request $request, User $doctor)
+    public function update(Request $request, string $id)
     {
+        $doctor = User::findOrFail($id);
         $validator = Validator::make($request->all(), [
             'email' => "required|email|max:255|string|unique:users,email",
         ]);
@@ -68,13 +69,21 @@ class DoctorController extends Controller
             ], 400);
         }
 
-        $doctor->update([
-            'email' => $request->email,
-        ]);
+        $doctor->email = $request->email;
+        $doctor->save();
         
         return response()->json([
             'status' => 200,
             'message' => "Doctor updated successfully",
+        ], 200);
+    }
+
+    public function destroy($id){
+        $doctor = User::find($id);
+        $doctor->delete();
+        return response()->json([
+            'status' => 200,
+            'message' => "Doctor deleted successfully",
         ], 200);
     }
 }

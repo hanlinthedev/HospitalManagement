@@ -41,7 +41,7 @@ class DoctorProfilesController extends Controller
         return response()->json([
             'status' => 200,
             'data' => $doctorprofile,
-            'specialization' => $specialization
+            // 'specialization' => $specialization
         ], 200);
     }
 
