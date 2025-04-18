@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Validator;
 
 class SpecializationsController extends Controller
 {
-    
+
     private function errorResponse($message, $errors = null, $statusCode = 422)
     {
         return response()->json([
@@ -40,12 +40,14 @@ class SpecializationsController extends Controller
 
     public function show($id){
 
+
         $department = Specialization::where("id", $id)->first();
+
 
         if(! $department){
             return response()->json([
                 'message' => 'no department found',
-            ], 204);    
+            ], 204);
         }
 
         return response()->json([
