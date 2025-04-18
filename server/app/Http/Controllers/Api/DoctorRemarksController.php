@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\DoctorRemarkResource;
 use App\Models\Appointment;
 use App\Models\DoctorRemark;
 use Illuminate\Http\Request;
@@ -32,8 +33,8 @@ class DoctorRemarksController extends Controller
 
     public function index()
     {
-        $doctorremark = DoctorRemark::all();
-        return response()->json(['status' => 200, 'data' => $doctorremark], 200);
+        $doctorremarks = DoctorRemarkResource::collection(DoctorRemark::all());
+        return response()->json([ 'status' => 200,'data' => $doctorremarks], 200);
     }
 
     public function store(Request $request, Appointment $appointment)

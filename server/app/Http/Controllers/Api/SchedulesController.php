@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ScheduleResource;
 use App\Models\DoctorProfile;
 use App\Models\Room;
 use App\Models\Schedule;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -33,8 +35,8 @@ class SchedulesController extends Controller
 
     public function index()
     {
-        $schedule = Schedule::all();
-        return response()->json(['status' => 200, 'data' => $schedule], 200);
+        $schedules = ScheduleResource::collection(Schedule::all());
+        return response()->json([ 'status' => 200,'data' => $schedules], 200);
     }
 
     // // if needed to create 
@@ -51,14 +53,25 @@ class SchedulesController extends Controller
     //     ]);
     // }
 
+    public function show(Schedule $schedule){
+
+            return response()->json([
+                'status' => 200,
+                'data' => new ScheduleResource($schedule),
+            ], 200);
+        
+    }
+
     public function store(Request $request)
     {
+        Gate::authorize('create', Schedule::class);
+
         $validator = Validator::make($request->all(), [
-            'room_id' => "nullable|exists:rooms,id",
-            'doctor_id' => "nullable|exists:doctor_profiles,id",
-            'day' => 'required',
-            'period' => 'required',
-            'booking_limit' => 'required'
+            'room_id'=>"required|exists:rooms,id",
+            'doctor_id'=>"required|exists:doctor_profiles,id",
+            'day'=> 'required',
+            'period'=> 'required',
+            'booking_limit'=> 'required'
         ]);
 
         if ($validator->fails()) {
@@ -98,7 +111,8 @@ class SchedulesController extends Controller
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Schedule created successfully'
+                'data' => new ScheduleResource($schedule),
+                'message' => 'schedule created successfully'
             ], 200);
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while creating room', ['exception' => [$e->getMessage()]], 500);
@@ -123,12 +137,13 @@ class SchedulesController extends Controller
 
     public function update(Request $request, Schedule $schedule)
     {
+        Gate::authorize('update', $schedule);
         $validator = Validator::make($request->all(), [
-            'room_id' => "nullable|exists:rooms,id",
-            'doctor_id' => "nullable|exists:doctor_profiles,id",
-            'day' => 'required',
-            'period' => 'required',
-            'booking_limit' => 'required'
+            'room_id'=>"exists:rooms,id",
+            'doctor_id'=>"  exists:doctor_profiles,id",
+            'day'=> 'required',
+            'period'=> 'required',
+            'booking_limit'=> 'required'
         ]);
 
         if ($validator->fails()) {
@@ -161,8 +176,10 @@ class SchedulesController extends Controller
                 $schedule->save();
             }
 
+
             return response()->json([
                 'status' => 200,
+                'data' => new ScheduleResource($schedule),
                 'message' => 'Schedule updated successfully'
             ], 200);
         } catch (\Exception $e) {
@@ -170,11 +187,12 @@ class SchedulesController extends Controller
         }
     }
 
-    public function destroy($id)
-    {
-        try {
-            $schedule = Schedule::findOrFail($id);
 
+    public function destroy(Schedule $schedule)
+    {
+        Gate::authorize('delete', $schedule);
+
+        try {
             if (!$schedule) {
                 return $this->errorResponse('Schedule not found', null, 404);
             }

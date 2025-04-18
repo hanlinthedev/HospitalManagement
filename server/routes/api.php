@@ -12,7 +12,6 @@ use App\Http\Controllers\Api\DoctorController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\JwtAuthController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Api\HomeController;
 use Illuminate\Http\Request;
 
 Route::group(['prefix' => "auth"], function () {
@@ -89,9 +88,38 @@ Route::group(['middleware' => ['jwtauthmiddleware']], function () {
     Route::resource('/doctorremarks',DoctorRemarksController::class);
 
 
+
+    
+    // second day of api route management ( otis )
+    Route::get('admin/rooms', [RoomsController::class, 'index']);
+    Route::get('admin/rooms/{room}', [RoomsController::class, 'show']);
+    Route::post('admin/rooms', [RoomsController::class, 'store']);
+    Route::put('admin/rooms/{room}', [RoomsController::class, 'update']);
+    Route::delete('admin/rooms/{room}', [RoomsController::class, 'destroy']);
+    Route::get('admin/rooms/{room}/schedules', [RoomsController::class, 'scheudlesOfRoom']);
+
+    Route::get('admin/schedules', [SchedulesController::class, 'index']);
+    Route::get('admin/schedules/{schedule}', [SchedulesController::class, 'show']);
+    Route::post('admin/schedules', [SchedulesController::class, 'store']);
+    Route::put('admin/schedules/{schedule}', [SchedulesController::class, 'update']);
+    Route::delete('admin/schedules/{schedule}', [SchedulesController::class, 'destroy']);
+
+	Route::get('admin/bookings', [AppointmentsController::class, 'index']);
+	Route::get('admin/bookings/{booking}', [AppointmentsController::class, 'show']);
+
+	Route::get('admin/reports', [DoctorRemarksController::class, 'index'] );
+
+	
+    
+
+    // Route::resource('/schedules', SchedulesController::class);
+    Route::resource('/doctorprofiles', DoctorProfilesController::class);
+    Route::resource('/doctorremarks', DoctorRemarksController::class);
+
     // Doctor-only routes
     Route::group(['middleware' => ['role:doctor'], 'prefix' => 'doctor/profile'], function () {
         // Route::post('/doctorprofiles/update/{id}', [DoctorProfilesController::class, 'update']);
+
 
         Route::get('/', [DoctorProfilesController::class, 'show'])->name('doctor.profile.index');
         Route::patch('/', [DoctorProfilesController::class, 'update'])->name('doctor.profile.update');
