@@ -34,7 +34,7 @@ class HomeController extends Controller
                 'doctors' => $doctors,
                 'departments' => $departments,
             ],
-            ], 200);
+        ], 200);
     }
 
     public function departments(){

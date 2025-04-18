@@ -3572,6 +3572,8 @@
                 }
             ],
             "time": "2025-04-08T15:06:14+00:00"
+<<<<<<< HEAD
+=======
         },
         {
             "name": "stella-maris/clock",
@@ -3619,6 +3621,7 @@
                 "source": "https://github.com/stella-maris-solutions/clock/tree/0.1.7"
             },
             "time": "2022-11-25T16:15:06+00:00"
+>>>>>>> 9f3589cb3233888c3eaf0f34a4f47009544104a5
         },
         {
             "name": "symfony/clock",

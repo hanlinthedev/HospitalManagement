@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\DoctorRemarkResource;
+use App\Models\Appointment;
 use App\Models\DoctorRemark;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class DoctorRemarksController extends Controller
@@ -19,16 +21,26 @@ class DoctorRemarksController extends Controller
         ], $statusCode);
     }
 
+    private function getDoctorProfile()
+    {
+        $profile = Auth::user()->doctorProfile;
+
+        if (!$profile) {
+            return $this->errorResponse('Doctor profile not found.', null, 403);
+        }
+        return $profile;
+    }
+
     public function index()
     {
         $doctorremarks = DoctorRemarkResource::collection(DoctorRemark::all());
         return response()->json([ 'status' => 200,'data' => $doctorremarks], 200);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, Appointment $appointment)
     {
         $validator = Validator::make($request->all(), [
-            'appointment_id' => 'required|exists:appointments,id',
+            // 'appointment_id' => 'required|exists:appointments,id',
             'remark' => 'required',
         ]);
 
@@ -37,27 +49,35 @@ class DoctorRemarksController extends Controller
         }
 
         try {
+            $profile = $this->getDoctorProfile();
 
-            $doctorremark = new DoctorRemark();
-            $doctorremark->appointment_id = $request->appointment_id;
-            $doctorremark->remark = $request->remark;
+            if (!($appointment->schedule && $appointment->schedule->doctor_id == $profile->id)) {
+                return $this->errorResponse('This appointment does not belong to your patients', null, 403);
+            }
 
-            $doctorremark->save();
+            $appointment->remark()->create([
+                'remark' => $request->remark,
+            ]);
+
+            // $doctorremark = new DoctorRemark();
+            // $doctorremark->appointment_id = $request->appointment_id;
+            // $doctorremark->remark = $request->remark;
+
+            // $doctorremark->save();
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Doctorremark created successfully'
+                'message' => 'Remark created successfully'
             ], 200);
-
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while creating doctorremark', ['exception' => [$e->getMessage()]], 500);
         }
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, Appointment $appointment)
     {
         $validator = Validator::make($request->all(), [
-            'appointment_id' => 'required|exists:appointments,id',
+            // 'appointment_id' => 'required|exists:appointments,id',
             'remark' => 'required',
         ]);
 
@@ -66,18 +86,26 @@ class DoctorRemarksController extends Controller
         }
 
         try {
+            $profile = $this->getDoctorProfile();
 
-            $doctorremark = DoctorRemark::findOrFail($id);
-            $doctorremark->appointment_id = $request->appointment_id;
-            $doctorremark->remark = $request->remark;
+            if (!($appointment->schedule && $appointment->schedule->doctor_id == $profile->id)) {
+                return $this->errorResponse('This appointment does not belong to your patients', null, 403);
+            }
 
-            $doctorremark->save();
+            $appointment->remark()->update([
+                'remark' => $request->remark,
+            ]);
+
+            // $doctorremark = DoctorRemark::findOrFail($id);
+            // $doctorremark->appointment_id = $request->appointment_id;
+            // $doctorremark->remark = $request->remark;
+
+            // $doctorremark->save();
 
             return response()->json([
                 'status' => 200,
-                'message' => 'Doctorremark updated successfully'
+                'message' => 'Remark updated successfully'
             ], 200);
-
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while updating doctorremark', ['exception' => [$e->getMessage()]], 500);
         }
@@ -98,9 +126,21 @@ class DoctorRemarksController extends Controller
                 'status' => 200,
                 'message' => 'Doctorremark deleted successfully'
             ], 200);
-
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while deleting doctorremark', ['exception' => [$e->getMessage()]], 500);
         }
+    }
+
+    public function getAppointmentRemark(Appointment $appointment)
+    {
+        $profile = $this->getDoctorProfile();
+
+        if (!($appointment->schedule && $appointment->schedule->doctor_id == $profile->id)) {
+            return $this->errorResponse('This appointment does not belong to your patients', null, 403);
+        }
+
+        $appointment->load('remark');
+
+        return response()->json(['status' => 200, 'data' => $appointment], 200);
     }
 }

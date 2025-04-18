@@ -9,6 +9,7 @@ use App\Models\Room;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class SchedulesController extends Controller
@@ -20,6 +21,16 @@ class SchedulesController extends Controller
             'message' => $message,
             'errors' => $errors
         ], $statusCode);
+    }
+
+    private function getDoctorProfile()
+    {
+        $profile = Auth::user()->doctorProfile;
+
+        if (!$profile) {
+            return $this->errorResponse('Doctor profile not found.', null, 403);
+        }
+        return $profile;
     }
 
     public function index()
@@ -68,22 +79,41 @@ class SchedulesController extends Controller
         }
 
         try {
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
+            if ($user->hasRole('doctor')) {
+                $profile = $this->getDoctorProfile();
 
-            $schedule = new Schedule();
-            $schedule->room_id = $request->room_id;
-            $schedule->doctor_id = $request->doctor_id;
-            $schedule->day = $request->day;
-            $schedule->period = $request->period;
-            $schedule->booking_limit = $request->booking_limit;
+                $is_schedule_exists = $profile->schedules()
+                    ->where('day', $request->day)
+                    ->where('period', $request->period)
+                    ->exists();
 
-            $schedule->save();
+                if ($is_schedule_exists) {
+                    return $this->errorResponse('A schedule for this day and period already exists.', null, 409);
+                }
+
+                $profile->schedules()->create([
+                    'day' => $request->day,
+                    'period' => $request->period,
+                    'booking_limit' => $request->booking_limit
+                ]);
+            } else {
+                $schedule = new Schedule();
+                $schedule->room_id = $request->room_id;
+                $schedule->doctor_id = $request->doctor_id;
+                $schedule->day = $request->day;
+                $schedule->period = $request->period;
+                $schedule->booking_limit = $request->booking_limit;
+
+                $schedule->save();
+            }
 
             return response()->json([
                 'status' => 200,
                 'data' => new ScheduleResource($schedule),
                 'message' => 'schedule created successfully'
             ], 200);
-
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while creating room', ['exception' => [$e->getMessage()]], 500);
         }
@@ -121,25 +151,42 @@ class SchedulesController extends Controller
         }
 
         try {
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
+            if ($user->hasRole('doctor')) {
+                $profile = $this->getDoctorProfile();
 
-            $schedule->room_id = $request->room_id;
-            $schedule->doctor_id = $request->doctor_id;
-            $schedule->day = $request->day;
-            $schedule->period = $request->period;
-            $schedule->booking_limit = $request->booking_limit;
+                if ($schedule->doctor_id != $profile->id) {
+                    return $this->errorResponse('This schedule does not belong to you', null, 403);
+                }
 
-            $schedule->save();
+                $schedule->update([
+                    'day' => $request->day,
+                    'period' => $request->period,
+                    'booking_limit' => $request->booking_limit
+                ]);
+            } else {
+                // $schedule = Schedule::findOrFail($id);
+                $schedule->room_id = $request->room_id;
+                $schedule->doctor_id = $request->doctor_id;
+                $schedule->day = $request->day;
+                $schedule->period = $request->period;
+                $schedule->booking_limit = $request->booking_limit;
+
+                $schedule->save();
+            }
+
 
             return response()->json([
                 'status' => 200,
                 'data' => new ScheduleResource($schedule),
                 'message' => 'Schedule updated successfully'
             ], 200);
-
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while updating schedule', ['exception' => [$e->getMessage()]], 500);
         }
     }
+
 
     public function destroy(Schedule $schedule)
     {
@@ -149,15 +196,45 @@ class SchedulesController extends Controller
             if (!$schedule) {
                 return $this->errorResponse('Schedule not found', null, 404);
             }
+
+            /** @var \App\Models\User $user */
+            $user = Auth::user();
+            if ($user->hasRole('doctor')) {
+                $profile = $this->getDoctorProfile();
+
+                if ($schedule->doctor_id != $profile->id) {
+                    return $this->errorResponse('This schedule does not belong to you', null, 403);
+                }
+            }
+
             $schedule->delete();
 
             return response()->json([
                 'status' => 200,
                 'message' => 'Schedule deleted successfully'
             ], 200);
-
         } catch (\Exception $e) {
             return $this->errorResponse('An error occurred while deleting schedule', ['exception' => [$e->getMessage()]], 500);
         }
+    }
+
+    public function getSchedulesForDoctor()
+    {
+        $profile = $this->getDoctorProfile();
+        $schedules = $profile->schedules()->orderBy('day')->orderBy('period')->get();
+
+        return response()->json(['status' => 200, 'data' => $schedules], 200);
+    }
+
+    public function show(Schedule $schedule)
+    {
+        $schedule->load('appointments');
+
+        $profile = $this->getDoctorProfile();
+        if ($schedule->doctor_id != $profile->id) {
+            return $this->errorResponse('This schedule does not belong to you', null, 403);
+        }
+
+        return response()->json(['status' => 200, 'data' => $schedule], 200);
     }
 }
