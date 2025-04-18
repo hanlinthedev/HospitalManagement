@@ -1,4 +1,12 @@
-import { DoctorCard } from "@/components/doctors";
+import {
+	DoctorAction,
+	DoctorBody,
+	DoctorCard,
+	DoctorImage,
+	DoctorInfo,
+	DoctorName,
+	DoctorSpecialization,
+} from "@/components/doctors";
 import { Doctor as IDoctor } from "@/types";
 import { UsersRound } from "lucide-react";
 import { Suspense } from "react";
@@ -10,12 +18,18 @@ const FeaturedDoctors = ({ doctors }: { doctors: IDoctor[] }) => {
 			<Suspense fallback={<div>Loading...</div>}>
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-12 justify-items-center px-4">
 					{doctors.map((doctor, index) => (
-						<DoctorCard
-							key={index}
-							specialization={doctor.specialization}
-							name={doctor.name}
-							profile_picture={doctor.profile_picture}
-						/>
+						<DoctorCard key={index}>
+							<DoctorImage profile_picture={doctor.profile_picture} />
+							<DoctorBody>
+								<DoctorInfo>
+									<DoctorName name={doctor.name} />
+									<DoctorSpecialization
+										specialization={doctor.specialization.name}
+									/>
+								</DoctorInfo>
+								<DoctorAction />
+							</DoctorBody>
+						</DoctorCard>
 					))}
 					<Link
 						to="/doctor"

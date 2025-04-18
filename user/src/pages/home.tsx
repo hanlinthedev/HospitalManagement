@@ -7,8 +7,7 @@ import {
 import { useHome } from "@/hooks/useHome";
 
 const Home = () => {
-	const { departments, doctors, isLoading } = useHome();
-	console.log(isLoading, doctors, departments);
+	const { departments, doctors } = useHome();
 	return (
 		<>
 			<Hero />

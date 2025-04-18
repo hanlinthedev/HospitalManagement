@@ -1,4 +1,8 @@
-import { Department } from "@/components/departments";
+import {
+	Department,
+	DepartmentImage,
+	DepartmentTitle,
+} from "@/components/departments";
 import { Department as IDepartment } from "@/types";
 import { ChevronRightCircle } from "lucide-react";
 import { Suspense } from "react";
@@ -12,10 +16,8 @@ const Departments = ({ departments }: { departments: IDepartment[] }) => {
 				<Suspense fallback={<div>Loading...</div>}>
 					{departments.map((department, index) => (
 						<Department key={index}>
-							<div className="w-full flex justify-center">
-								<img className="w-1/2 " src={department.icon} alt="" />
-							</div>
-							<div className="text-2xl font-semibold">{department.name}</div>
+							<DepartmentImage icon={department.icon} />
+							<DepartmentTitle name={department.name} />
 						</Department>
 					))}
 				</Suspense>

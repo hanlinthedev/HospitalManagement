@@ -1,3 +1,16 @@
-import Department from "./department";
+import Department, {
+	DepartmentAction,
+	DepartmentDescription,
+	DepartmentImage,
+	DepartmentSeperator,
+	DepartmentTitle,
+} from "./department";
 
-export { Department };
+export {
+	Department,
+	DepartmentAction,
+	DepartmentDescription,
+	DepartmentImage,
+	DepartmentSeperator,
+	DepartmentTitle,
+};

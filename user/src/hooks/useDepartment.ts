@@ -1,28 +1,24 @@
-import { homeApi } from "@/services";
+import { departmentApi } from "@/services";
 import { RootState } from "@/store";
-import { setData } from "@/store/slices/homeSlice";
+import { setDepartments } from "@/store/slices/departmentSlice";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-export const useHome = () => {
+export const useDepartment = () => {
 	const dispatch = useDispatch();
-	const { departments, doctors } = useSelector(
-		(state: RootState) => state.home
-	);
+	const { departments } = useSelector((state: RootState) => state.departments);
 	const { data, isLoading } = useQuery({
-		queryKey: ["home"],
-		queryFn: homeApi.getData,
+		queryKey: ["departments"],
+		queryFn: departmentApi.getDepartment,
 	});
-
 	useEffect(() => {
 		if (data) {
-			dispatch(setData(data));
+			dispatch(setDepartments(data));
 		}
 	}, [data, dispatch, isLoading]);
 	return {
 		departments,
-		doctors,
 		isLoading,
 	};
 };

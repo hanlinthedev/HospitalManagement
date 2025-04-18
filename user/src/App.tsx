@@ -4,6 +4,7 @@ import AppLayout from "./components/common/AppLayout";
 
 import { lazy, Suspense } from "react";
 import Loading from "./components/common/Loading";
+import { EachDepartment } from "./pages";
 
 const About = lazy(() => import("./pages/about"));
 const Departments = lazy(() => import("./pages/departments"));
@@ -23,14 +24,17 @@ function App() {
 						</Suspense>
 					}
 				/>
-				<Route
-					path="department"
-					element={
-						<Suspense key={location.pathname} fallback={<Loading />}>
-							<Departments />
-						</Suspense>
-					}
-				/>
+				<Route path="department">
+					<Route
+						index
+						element={
+							<Suspense key={location.pathname} fallback={<Loading />}>
+								<Departments />
+							</Suspense>
+						}
+					/>
+					<Route path=":id" element={<EachDepartment />} />
+				</Route>
 				<Route
 					path="doctor"
 					element={

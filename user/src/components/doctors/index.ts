@@ -1,3 +1,18 @@
-import DoctorCard from "./doctorCard";
+import DoctorCard, {
+	DoctorAction,
+	DoctorBody,
+	DoctorImage,
+	DoctorInfo,
+	DoctorName,
+	DoctorSpecialization,
+} from "./doctorCard";
 
-export { DoctorCard };
+export {
+	DoctorAction,
+	DoctorBody,
+	DoctorCard,
+	DoctorImage,
+	DoctorInfo,
+	DoctorName,
+	DoctorSpecialization,
+};
