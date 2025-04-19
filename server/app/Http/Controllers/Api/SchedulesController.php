@@ -226,15 +226,15 @@ class SchedulesController extends Controller
         return response()->json(['status' => 200, 'data' => $schedules], 200);
     }
 
-    public function show(Schedule $schedule)
-    {
-        $schedule->load('appointments');
+    // public function show(Schedule $schedule)
+    // {
+    //     $schedule->load('appointments');
 
-        $profile = $this->getDoctorProfile();
-        if ($schedule->doctor_id != $profile->id) {
-            return $this->errorResponse('This schedule does not belong to you', null, 403);
-        }
+    //     $profile = $this->getDoctorProfile();
+    //     if ($schedule->doctor_id != $profile->id) {
+    //         return $this->errorResponse('This schedule does not belong to you', null, 403);
+    //     }
 
-        return response()->json(['status' => 200, 'data' => $schedule], 200);
-    }
+    //     return response()->json(['status' => 200, 'data' => $schedule], 200);
+    // }
 }
