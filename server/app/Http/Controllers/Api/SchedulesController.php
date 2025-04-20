@@ -53,14 +53,14 @@ class SchedulesController extends Controller
     //     ]);
     // }
 
-    public function show(Schedule $schedule){
+    // public function show(Schedule $schedule){
 
-            return response()->json([
-                'status' => 200,
-                'data' => new ScheduleResource($schedule),
-            ], 200);
+    //         return response()->json([
+    //             'status' => 200,
+    //             'data' => new ScheduleResource($schedule),
+    //         ], 200);
         
-    }
+    // }
 
     public function store(Request $request)
     {
