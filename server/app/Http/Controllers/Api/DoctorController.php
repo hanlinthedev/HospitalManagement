@@ -11,13 +11,13 @@ class DoctorController extends Controller
 {
     public function index()
     {
-        $doctors = User::role('doctor')->get();
+        $doctors = User::role('doctor')->with(['doctorProfile'])->get();
         return response()->json(['status' => 200, 'data' => $doctors], 200);
     }
 
     public function show(User $doctor)
     {
-        return response()->json(['status' => 200, 'data' => $doctor], 200);
+        return response()->json(['status' => 200, 'data' => $doctor->load('doctorProfile')], 200);
     }
 
     public function search(Request $request)

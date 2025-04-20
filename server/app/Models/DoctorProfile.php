@@ -18,6 +18,8 @@ class DoctorProfile extends Model
         'profile_picture',
     ];
 
+    protected $with = ['specialization'];
+
     public function user()
     {
         return $this->belongsTo(User::class);
